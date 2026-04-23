@@ -228,14 +228,14 @@
 Adaptive file read that automatically selects the optimal compression mode based on
     file size, type, cache state, and token budget.
 </p> <h3>パラメータ</h3> <ul> <li><code>path</code> (required) — file path to read</li> </ul> <h3>Example</h3> <pre><code>ctx_smart_read src/auth.ts
-→ [auto:map] Selected map mode (file cached, 915 tokens → 89 tokens)</code></pre> <h2 id="ctx_delta">ctx_delta</h2> <p>
+→ [auto:map] Selected map mode (file cached, 915 tokens → 89 tokens)</code></pre> <a href="/ja/docs/tools/ctx-smart-read" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_delta">ctx_delta</h2> <p>
 Incremental file update using Myers diff. Only sends changed lines (hunks with context)
     instead of full file content. Automatically updates the cache after computing the delta.
 </p> <h3>パラメータ</h3> <ul> <li><code>path</code> (required) — file path to diff against cached version</li> </ul> <h3>Example</h3> <pre><code>ctx_delta src/auth.ts
 → Δ auth.ts (3 hunks, 12 lines changed)
   @@ -45,3 +45,5 @@
   + const token = generateJWT(user);
-  + res.cookie('session', token);</code></pre> <h2 id="ctx_fill">ctx_fill</h2> <p>
+  + res.cookie('session', token);</code></pre> <a href="/ja/docs/tools/ctx-delta" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_fill">ctx_fill</h2> <p>
 Priority-based context filling with a token budget. Given a list of files and a budget,
     automatically selects the best compression mode per file to maximize information within the budget.
     Higher-relevance files get more tokens (full mode); lower-relevance files get compressed (signatures).
@@ -244,7 +244,7 @@ Priority-based context filling with a token budget. Given a list of files and a 
   auth.ts     → full       (915 tokens, priority 10)
   db.ts       → map        (89 tokens, priority 5)
   routes.ts   → signatures (42 tokens, priority 3)
-  Total: 1046/2000 tokens used</code></pre> <h2 id="ctx_intent">ctx_intent</h2> <p>
+  Total: 1046/2000 tokens used</code></pre> <a href="/ja/docs/tools/ctx-fill" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_intent">ctx_intent</h2> <p>
 Semantic intent detection with multi-intent support. Analyzes natural language queries to determine intent
     (fix bug, add feature, refactor, understand, test, config, deploy, review), classifies complexity
     (mechanical/standard/architectural), and auto-loads relevant files ranked by heat score.
@@ -255,14 +255,14 @@ Semantic intent detection with multi-intent support. Analyzes natural language q
   F1=src/auth.ts (full, 915t) — heat: 0.92
   F2=src/login.ts (full, 412t) — heat: 0.78
   F3=src/__tests__/auth.test.ts (full, 340t) — heat: 0.65
-  F4=src/middleware.ts (map, 89t) — heat: 0.45</code></pre> <h2 id="ctx_context">ctx_context</h2> <p>
+  F4=src/middleware.ts (map, 89t) — heat: 0.45</code></pre> <a href="/ja/docs/tools/ctx-intent" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_context">ctx_context</h2> <p>
 Multi-turn context manager. Shows what files the LLM has already seen,
     which are cached, and provides a session overview to avoid redundant re-reads.
 </p> <h3>パラメータ</h3> <p>No parameters. Returns current context state.</p> <h3>Example</h3> <pre><code>ctx_context
 → Turn 12 | Files: 8 cached | Reads: 24 | Cache hits: 16 (67%)
   F1=auth.ts ✓cached [5 reads]
   F2=db.ts ✓cached [3 reads]
-  F3=routes.ts ✓cached [2 reads, modified]</code></pre> <h2 id="ctx_graph">ctx_graph</h2> <p>
+  F3=routes.ts ✓cached [2 reads, modified]</code></pre> <a href="/ja/docs/tools/ctx-context" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_graph">ctx_graph</h2> <p>
 Build and query a <strong>persistent project intelligence graph</strong>. Incrementally scans your
     codebase, extracts symbols and dependencies, and stores the index on disk for instant access
     across sessions. Supports 5 actions for structural understanding of any project.
@@ -316,36 +316,36 @@ Shows index metadata: file count, symbol count, edge count, last build time, and
   Index:   ~/.lean-ctx/graphs/a3f8c1/index.json
   Files:   142 | Symbols: 847 | Edges: 1,203
   Last build: 2026-03-27 14:30 (12 min ago)
-  Stale files: 3 (re-run build to update)</code></pre> <h2 id="ctx_dedup">ctx_dedup</h2> <p>
+  Stale files: 3 (re-run build to update)</code></pre> <a href="/ja/docs/tools/ctx-graph" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_dedup">ctx_dedup</h2> <p>
 Cross-file deduplication analysis. Finds shared imports, boilerplate blocks,
     and repeated patterns across all cached files. Reports potential token savings.
 </p> <h3>パラメータ</h3> <ul> <li><code>action</code> (optional) — <code>analyze</code> (default, report-only) or <code>apply</code> (apply dedup optimizations)</li> </ul> <h3>Example</h3> <pre><code>ctx_dedup
 → Found 3 shared patterns across 8 cached files:
   &quot;import { db } from &#39;../pages/docs/lib/db&#39;&quot; — 5 files (saving ~40 tokens)
-  &quot;export default handler&quot; — 4 files (saving ~25 tokens)</code></pre> <h2 id="ctx_response">ctx_response</h2> <p>
+  &quot;export default handler&quot; — 4 files (saving ~25 tokens)</code></pre> <a href="/ja/docs/tools/ctx-dedup" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_response">ctx_response</h2> <p>
 Bi-directional response compression. Compresses LLM response text by removing filler
     content and applying TDD shortcuts. Use to verify compression quality of responses.
-</p> <h3>パラメータ</h3> <ul> <li><code>text</code> (required) — text to compress</li> </ul> <h2 id="ctx_discover">ctx_discover</h2> <p>
+</p> <h3>パラメータ</h3> <ul> <li><code>text</code> (required) — text to compress</li> </ul> <a href="/ja/docs/tools/ctx-response" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_discover">ctx_discover</h2> <p>
 Analyzes shell history to find commands that could benefit from lean-ctx compression.
     Shows missed savings opportunities with estimated token/cost savings.
 </p> <h3>パラメータ</h3> <ul> <li><code>limit</code> (optional) — number of results (default 15)</li> </ul> <h3>Example</h3> <pre><code>ctx_discover
 → Shell commands that would benefit from lean-ctx:
   docker ps -a        — ran 12x, ~800 tokens each → ~9,600 tokens saveable
-  kubectl get pods    — ran 8x, ~1,200 tokens each → ~9,600 tokens saveable</code></pre> <h2 id="ctx_edit">ctx_edit</h2> <p>
+  kubectl get pods    — ran 8x, ~1,200 tokens each → ~9,600 tokens saveable</code></pre> <a href="/ja/docs/tools/ctx-discover" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_edit">ctx_edit</h2> <p>
 Search-and-replace file editing that works without needing native Read or Edit tools.
     Reads the file, replaces the specified string, and writes the result — all in one MCP call.
 </p> <h3>パラメータ</h3> <ul> <li><code>path</code> (required) — file path to edit</li> <li><code>old_string</code> (optional) — exact text to find. Omit when creating a new file.</li> <li><code>new_string</code> (required) — replacement text</li> <li><code>create</code> (optional, boolean) — create the file if it does not exist. Default: <code>false</code>.</li> <li><code>replace_all</code> (optional, boolean) — replace all occurrences, not just the first. Default: <code>false</code>.</li> </ul> <h3>Example</h3> <pre><code>ctx_edit path=src/config.ts old_string="timeout: 5000" new_string="timeout: 10000"
-→ Replaced 1 occurrence in src/config.ts (cache updated)</code></pre> <h2 id="ctx_preload">ctx_preload</h2> <p>
+→ Replaced 1 occurrence in src/config.ts (cache updated)</code></pre> <a href="/ja/docs/tools/ctx-edit" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_preload">ctx_preload</h2> <p>
 Proactive context loader. Given a task description, automatically identifies and caches
     task-relevant files, returning a compact summary. Use at session start alongside <code>ctx_overview</code>.
 </p> <h3>パラメータ</h3> <ul> <li><code>task</code> (required) — description of current task for relevance-based file selection</li> <li><code>path</code> (optional) — project root path</li> </ul> <h3>Example</h3> <pre><code>ctx_preload task="fix JWT token refresh"
 → Preloaded 5 files (2,340 tokens):
   F1=src/auth.ts (full) F2=src/lib/jwt.ts (full) F3=src/middleware.ts (map)
-  F4=src/config.ts (signatures) F5=src/routes.ts (signatures)</code></pre> <h2 id="ctx_semantic_search">ctx_semantic_search</h2> <p> <span>BM25 + 密な埋め込みによるハイブリッド意味検索。自動のインクリメンタル索引付き。埋め込みが利用できない場合は BM25 にフォールバックします。</span> </p> <h3>パラメータ</h3> <ul> <li><code>query</code> (required) — natural language search query</li> <li><code>path</code> (optional) — project root to search</li> <li><code>top_k</code> (optional) — number of results (default 10)</li> <li><code>action</code> (optional) — <code>reindex</code> to rebuild index</li> <li><code>mode</code> (optional) — <code>hybrid</code> (default), <code>dense</code>, <code>bm25</code></li> <li><code>languages</code> (optional) — restrict to language/extension (e.g. <code>["rust","ts"]</code>)</li> <li><code>path_glob</code> (optional) — glob filter over relative paths (e.g. <code>"rust/src/**"</code>)</li> </ul> <h3>Example</h3> <pre><code>ctx_semantic_search query="JWT token validation" top_k=5
+  F4=src/config.ts (signatures) F5=src/routes.ts (signatures)</code></pre> <a href="/ja/docs/tools/ctx-preload" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_semantic_search">ctx_semantic_search</h2> <p> <span>BM25 + 密な埋め込みによるハイブリッド意味検索。自動のインクリメンタル索引付き。埋め込みが利用できない場合は BM25 にフォールバックします。</span> </p> <h3>パラメータ</h3> <ul> <li><code>query</code> (required) — natural language search query</li> <li><code>path</code> (optional) — project root to search</li> <li><code>top_k</code> (optional) — number of results (default 10)</li> <li><code>action</code> (optional) — <code>reindex</code> to rebuild index</li> <li><code>mode</code> (optional) — <code>hybrid</code> (default), <code>dense</code>, <code>bm25</code></li> <li><code>languages</code> (optional) — restrict to language/extension (e.g. <code>["rust","ts"]</code>)</li> <li><code>path_glob</code> (optional) — glob filter over relative paths (e.g. <code>"rust/src/**"</code>)</li> </ul> <h3>Example</h3> <pre><code>ctx_semantic_search query="JWT token validation" top_k=5
 → 5 results:
   1. src/auth.ts:18-42 — verifyJWT function (score: 0.89)
   2. src/middleware.ts:5-20 — auth middleware (score: 0.76)
-  3. src/lib/jwt.ts:1-35 — JWT utilities (score: 0.71)</code></pre> <h2 id="ctx_symbol">ctx_symbol</h2> <p>名前で特定のシンボル（関数/struct/クラス/メソッド）を読み、行番号付きで該当コード範囲のみ返します。</p> <h3>パラメータ</h3> <ul> <li><code>name</code> (required) — symbol name</li> <li><code>file</code> (optional) — narrow by file path</li> <li><code>kind</code> (optional) — <code>fn</code>, <code>struct</code>, <code>class</code>, <code>method</code>, <code>trait</code>, <code>enum</code></li> </ul> <h2 id="ctx_outline">ctx_outline</h2> <p>ファイル全体を読まずに、ファイルのアウトライン（シンボル + シグネチャ）をコンパクトに生成します。</p> <h3>パラメータ</h3> <ul> <li><code>path</code> (required) — file path</li> <li><code>kind</code> (optional) — filter by kind</li> </ul> <h2 id="ctx_callers">ctx_callers</h2> <p>永続コールグラフ（インクリメンタル構築）を使って、関数/メソッドを呼ぶシンボルを見つけます。</p> <h3>パラメータ</h3> <ul> <li><code>symbol</code> (required) — symbol name to find callers of</li> <li><code>file</code> (optional) — filter by caller file</li> </ul> <h2 id="ctx_callees">ctx_callees</h2> <p>永続コールグラフ（インクリメンタル構築）を使って、シンボルが呼ぶ関数/メソッドを一覧します。</p> <h3>パラメータ</h3> <ul> <li><code>symbol</code> (required) — symbol name to list callees for</li> <li><code>file</code> (optional) — filter by caller file</li> </ul> <h2 id="ctx_routes">ctx_routes</h2> <p>一般的なフレームワークから HTTP ルート/エンドポイントを抽出し、ハンドラとファイル位置付きで一覧します。</p> <h3>パラメータ</h3> <ul> <li><code>method</code> (optional) — HTTP method (GET, POST, ...)</li> <li><code>path</code> (optional) — path prefix (e.g. <code>/api</code>)</li> </ul> <h2 id="ctx_graph_diagram">ctx_graph_diagram</h2> <p>依存グラフ（<code>deps</code>）またはコールグラフ（<code>calls</code>）の Mermaid 図を生成します。</p> <h3>パラメータ</h3> <ul> <li><code>kind</code> (optional) — <code>deps</code> (default) or <code>calls</code></li> <li><code>file</code> (optional) — focus filter</li> <li><code>depth</code> (optional) — max depth (default 2)</li> </ul> <h2 id="ctx_compress_memory">ctx_compress_memory</h2> <p>メモリ/設定 Markdown を圧縮（コードブロック・URL・パス保持）し、<code>.original.md</code> バックアップを作成します。</p> <h3>パラメータ</h3> <ul> <li><code>path</code> (required) — file path to compress</li> </ul> <h2 id="ctx_impact">ctx_impact — Reverse Dependency Analysis</h2> <p>
+  3. src/lib/jwt.ts:1-35 — JWT utilities (score: 0.71)</code></pre> <a href="/ja/docs/tools/ctx-semantic-search" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_symbol">ctx_symbol</h2> <p>名前で特定のシンボル（関数/struct/クラス/メソッド）を読み、行番号付きで該当コード範囲のみ返します。</p> <h3>パラメータ</h3> <ul> <li><code>name</code> (required) — symbol name</li> <li><code>file</code> (optional) — narrow by file path</li> <li><code>kind</code> (optional) — <code>fn</code>, <code>struct</code>, <code>class</code>, <code>method</code>, <code>trait</code>, <code>enum</code></li> </ul> <a href="/ja/docs/tools/ctx-symbol" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_outline">ctx_outline</h2> <p>ファイル全体を読まずに、ファイルのアウトライン（シンボル + シグネチャ）をコンパクトに生成します。</p> <h3>パラメータ</h3> <ul> <li><code>path</code> (required) — file path</li> <li><code>kind</code> (optional) — filter by kind</li> </ul> <a href="/ja/docs/tools/ctx-outline" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_callers">ctx_callers</h2> <p>永続コールグラフ（インクリメンタル構築）を使って、関数/メソッドを呼ぶシンボルを見つけます。</p> <h3>パラメータ</h3> <ul> <li><code>symbol</code> (required) — symbol name to find callers of</li> <li><code>file</code> (optional) — filter by caller file</li> </ul> <a href="/ja/docs/tools/ctx-callers" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_callees">ctx_callees</h2> <p>永続コールグラフ（インクリメンタル構築）を使って、シンボルが呼ぶ関数/メソッドを一覧します。</p> <h3>パラメータ</h3> <ul> <li><code>symbol</code> (required) — symbol name to list callees for</li> <li><code>file</code> (optional) — filter by caller file</li> </ul> <a href="/ja/docs/tools/ctx-callees" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_routes">ctx_routes</h2> <p>一般的なフレームワークから HTTP ルート/エンドポイントを抽出し、ハンドラとファイル位置付きで一覧します。</p> <h3>パラメータ</h3> <ul> <li><code>method</code> (optional) — HTTP method (GET, POST, ...)</li> <li><code>path</code> (optional) — path prefix (e.g. <code>/api</code>)</li> </ul> <a href="/ja/docs/tools/ctx-routes" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_graph_diagram">ctx_graph_diagram</h2> <p>依存グラフ（<code>deps</code>）またはコールグラフ（<code>calls</code>）の Mermaid 図を生成します。</p> <h3>パラメータ</h3> <ul> <li><code>kind</code> (optional) — <code>deps</code> (default) or <code>calls</code></li> <li><code>file</code> (optional) — focus filter</li> <li><code>depth</code> (optional) — max depth (default 2)</li> </ul> <a href="/ja/docs/tools/ctx-graph-diagram" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_compress_memory">ctx_compress_memory</h2> <p>メモリ/設定 Markdown を圧縮（コードブロック・URL・パス保持）し、<code>.original.md</code> バックアップを作成します。</p> <h3>パラメータ</h3> <ul> <li><code>path</code> (required) — file path to compress</li> </ul> <a href="/ja/docs/tools/ctx-compress-memory" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_impact">ctx_impact — Reverse Dependency Analysis</h2> <p>
 Analyzes the impact of changing a file by tracing reverse dependencies through the project graph.
     Shows which files import or depend on the target, helping assess the blast radius of changes.
 </p> <h3>パラメータ</h3> <ul> <li><code>action</code> (required) — <code>analyze</code> (default), <code>chain</code> (dependency chain), <code>build</code> (rebuild index), or <code>status</code></li> <li><code>root</code> (required for analyze/chain) — file path to analyze impact for</li> </ul> <h3>Example</h3> <pre><code>ctx_impact path=src/auth.ts
@@ -356,7 +356,7 @@ Analyzes the impact of changing a file by tracing reverse dependencies through t
     src/api/users.ts — imports: AuthToken type
 
   Transitive (depth 2): 7 more files
-  Blast radius: 10 files (7% of project)</code></pre> <h2 id="ctx_architecture">ctx_architecture — Project Architecture Map</h2> <p>
+  Blast radius: 10 files (7% of project)</code></pre> <a href="/ja/docs/tools/ctx-impact" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2 id="ctx_architecture">ctx_architecture — Project Architecture Map</h2> <p>
 Generates a high-level architecture overview of the project using the dependency graph.
     Groups files into logical layers and shows inter-layer dependencies.
 </p> <h3>パラメータ</h3> <ul> <li><code>action</code> (required) — <code>overview</code> (default), <code>clusters</code>, <code>layers</code>, <code>cycles</code>, <code>entrypoints</code>, or <code>module</code></li> <li><code>root</code> (optional) — project root or module path (defaults to cwd)</li> </ul> <h3>Example</h3> <pre><code>ctx_architecture action=overview
@@ -370,7 +370,7 @@ Generates a high-level architecture overview of the project using the dependency
 
   Dependencies:
     API → Service → Data → Config
-    API → Config (direct)</code></pre> <h2>Adaptive Compression (Wave 5)</h2> <p>
+    API → Config (direct)</code></pre> <a href="/ja/docs/tools/ctx-architecture" class="inline-flex items-center gap-1 text-accent hover:text-accent-2 text-sm mt-2 transition-colors">Full reference →</a> <h2>Adaptive Compression (Wave 5)</h2> <p>
 Starting with v2.21, lean-ctx includes adaptive compression that learns from usage patterns
     and automatically optimizes compression strategies per project and language.
 </p> <h3>ACON Feedback Loop</h3> <p>
