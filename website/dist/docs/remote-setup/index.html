@@ -92,7 +92,7 @@ curl -fsSL https://leanctx.com/install.sh | sh</code></pre> <h3>2. Test the conn
 ssh -L 3333:localhost:3333 user@server "lean-ctx dashboard --port 3333"
 
 # Or just forward the MCP stdio over SSH:
-ssh user@server "lean-ctx"</code></pre> <h3>3. Configure your AI client</h3> <p>Point your AI client's MCP config to run lean-ctx via SSH. This works with Cursor, Claude Code, Windsurf, and any MCP-compatible client:</p> <pre><code>// ~/.cursor/mcp.json or ~/.claude.json
+ssh user@server "lean-ctx"</code></pre> <h3>3. Configure your AI client</h3> <p>Point your AI client's MCP config to run lean-ctx via SSH. This works with Cursor, Claude Code, Windsurf, Pi, and any MCP-compatible client:</p> <pre><code>// ~/.cursor/mcp.json or ~/.claude.json
 {
   &quot;mcpServers&quot;: {
     &quot;lean-ctx&quot;: {
